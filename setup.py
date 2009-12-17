@@ -9,7 +9,7 @@ setup(name=u'progress_sa',
       version=version,
       description=u"Minimal SQLAlchemy dialect for OpenEdge 10/Progress.",
       long_description=u"""\
-      A SQLAlchemy dialect that can be used to read OpenEdge 10 (née
+      A SQLAlchemy dialect that can be used to read OpenEdge 10 (aka
       Progress) databases over ODBC.
 
       This dialect was written to do some simple reporting only. It has
