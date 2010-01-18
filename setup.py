@@ -36,7 +36,7 @@ setup(name=u'progress_sa',
       include_package_data=True,
       zip_safe=False,
       install_requires=[
-          "sqlalchemy >= 0.6beta1dev-r0",
+          "SQLAlchemy >= 0.6beta1dev-r0",
       ],
       entry_points="""
       [sqlalchemy.dialects]
