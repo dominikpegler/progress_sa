@@ -140,7 +140,21 @@ class ProgressDialect(default.DefaultDialect):
         self.text_as_varchar = False
 
     def _check_unicode_returns(self, connection):
-        cursor = connection.connection.cursor()
+        cursor = self._get_raw_cursor(connection)
+        item = cursor.columns('SYSTABLES').fetchone()
+        try:
+            item[1].encode('ascii')
+        except UnicodeEncodeError, e:
+            # In Linux, if the connection has been opened with
+            # unicode_results=True and an unpatched pyodbc (see
+            # progress_sa distribution) then the Progress ODBC driver
+            # returns UTF-8 interpreted by pyodbc as UCS-2.
+            # Things go downhill from there unless we abort.
+            raise exc.SQLAlchemyError(
+                "Non-ASCII in SYSTABLES. "
+                "Are you using an unpatched pyodbc?", 
+                )
+
         cursor.execute(
             str(
                 expression.select( 
@@ -152,7 +166,9 @@ class ProgressDialect(default.DefaultDialect):
         row = cursor.fetchone()
         result = isinstance(row[0], unicode)
         cursor.close()
+
         return result
+
 
     def last_inserted_ids(self):
         return self.context.last_inserted_ids
@@ -163,7 +179,7 @@ class ProgressDialect(default.DefaultDialect):
     def _get_raw_cursor(self, connection):
         return connection.engine.raw_connection().cursor()
 
-    def table_names(self, connection, schema):
+    def get_table_names(self, connection, schema):
         cursor = self._get_raw_cursor(connection)
         s = cursor.tables(schema=schema or '')
         return [row.table_name for row in s]
@@ -200,8 +216,11 @@ class ProgressDialect(default.DefaultDialect):
         return pk
 
     def get_foreign_keys(self, *args, **kw):
+        # does not seem to be implemented in the database.
         return []
 
     def get_indexes(self, connection, table_name, schema=None, **kw):
+        # implemented in the database, not terribly useful.
+        # would be a list of dict(name='', column_names=[], unique=)...
         return []
 

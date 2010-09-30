@@ -3,7 +3,7 @@
 from setuptools import setup, find_packages
 import sys, os
 
-version = '0.3'
+version = '0.4'
 
 setup(name=u'progress_sa',
       version=version,
@@ -36,7 +36,7 @@ setup(name=u'progress_sa',
       include_package_data=True,
       zip_safe=False,
       install_requires=[
-          "SQLAlchemy >= 0.6beta1dev-r0",
+          "SQLAlchemy >= 0.6.4",
       ],
       entry_points="""
       [sqlalchemy.dialects]
