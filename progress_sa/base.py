@@ -140,6 +140,9 @@ class ProgressDialect(default.DefaultDialect):
         self.text_as_varchar = False
 
     def _check_unicode_returns(self, connection):
+        return True
+
+        # XXX Lately this hangs the database:
         cursor = self._get_raw_cursor(connection)
         item = cursor.columns('SYSTABLES').fetchone()
         try:
