@@ -1,7 +1,3 @@
-0.4.1
+0.0.1
 =====
-- Disable _check_unicode_returns() (always returns 'True') because lately it
-  hangs.
-  It is still very bad if _check_unicode_returns() is wrong -- if you
-  care about your data, you must manually verify that your database
-  connection returns ungarbled unicode text.
+- Forked from 0.4.1 from https://github.com/dholth/progress_sa

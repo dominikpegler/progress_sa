@@ -10,8 +10,8 @@ class Progress_pyodbc(PyODBCConnector, ProgressDialect):
     pyodbc_driver_name = 'Progress_SQL_Driver'
     execution_ctx_cls = ProgressExecutionContext_pyodbc
 
-    def __init__(self, description_encoding='latin-1', **params):
-        super(Progress_pyodbc, self).__init__(**params)
+    def __init__(self, description_encoding='latin-1', **kwargs):
+        super(Progress_pyodbc, self).__init__(**kwargs)
         self.description_encoding = description_encoding
 
 dialect = Progress_pyodbc

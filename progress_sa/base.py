@@ -147,7 +147,7 @@ class ProgressDialect(default.DefaultDialect):
         item = cursor.columns('SYSTABLES').fetchone()
         try:
             item[1].encode('ascii')
-        except UnicodeEncodeError, e:
+        except (UnicodeEncodeError, e):
             # In Linux, if the connection has been opened with
             # unicode_results=True and an unpatched pyodbc (see
             # progress_sa distribution) then the Progress ODBC driver
