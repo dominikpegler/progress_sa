@@ -29,13 +29,13 @@ setup(name=u'progress_sa',
       install_requires=[
           "SQLAlchemy >= 1.1.2",
       ],
-      entry_points = {
-     'sqlalchemy.databases': ['progress = progress_sa:base.dialect',]
-   },
+      entry_points="""
+      [sqlalchemy.dialects]
+      progress = progress_sa:base.dialect
+      """
+         )
 
-      )
 
-    #   entry_points="""
-    #   [sqlalchemy.dialects]
-    #   progress = progress_sa:base.dialect
-    #   """
+
+    #       entry_points = {
+    #  'sqlalchemy.databases': ['progress = progress_sa:base.dialect',]}
