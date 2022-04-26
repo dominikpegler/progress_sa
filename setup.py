@@ -28,7 +28,7 @@ setup(name='progress_sa',
           "SQLAlchemy >= 1.1.2",
       ],
       entry_points={
-        'sqlalchemy.dialects': ['progress = progress_sa:base.dialect',]
+        'sqlalchemy.dialects': ['progress.pyodbc = progress_sa:base.dialect']
       }
 
 
