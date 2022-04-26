@@ -5,9 +5,9 @@ import sys, os
 
 version = '0.0.1'
 
-setup(name=u'progress_sa',
+setup(name='progress_sa',
       version=version,
-      description=u"Minimal SQLAlchemy dialect for OpenEdge 10/Progress.",
+      description=u"Minimal SQLAlchemy dialect for Progress OpenEdge 11.",
       long_description="""\
       An SQLAlchemy dialect that can be used to read Progress OpenEdge 11
       databases over ODBC.
@@ -19,8 +19,6 @@ setup(name=u'progress_sa',
           'Topic :: Database :: Database Engines/Servers',
           ],
       keywords='sqlalchemy database dialect odbc',
-      author='Daniel Holth',
-      author_email='dholth@fastmail.fm',
       url='http://github.com/dominikpegler/progress_sa',
       license='MIT',
       packages=find_packages(exclude=['ez_setup', 'examples', 'tests']),
@@ -29,13 +27,20 @@ setup(name=u'progress_sa',
       install_requires=[
           "SQLAlchemy >= 1.1.2",
       ],
-      entry_points="""
-      [sqlalchemy.dialects]
-      progress = progress_sa:base.dialect
-      """
+      entry_points={
+        'sqlalchemy.dialects': ['progress = progress_sa:base.dialect',]
+      }
+
+
          )
 
 
 
     #       entry_points = {
     #  'sqlalchemy.databases': ['progress = progress_sa:base.dialect',]}
+
+
+    # """
+    #   [sqlalchemy.dialects]
+    #   progress = progress_sa:base.dialect
+    #   """
