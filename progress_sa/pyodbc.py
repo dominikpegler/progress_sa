@@ -8,7 +8,8 @@ class ProgressExecutionContext_pyodbc(ProgressExecutionContext):
     pass
 
 class Progress_pyodbc(PyODBCConnector, ProgressDialect):
-    pyodbc_driver_name = 'Progress_SQL_Driver' # "DataDirect 7.1 Progress OpenEdge Wire Protocol" #"Progress OpenEdge 11.7 Driver"
+    #pyodbc_driver_name = 'Progress_SQL_Driver' # "DataDirect 7.1 Progress OpenEdge Wire Protocol" #"Progress OpenEdge 11.7 Driver"
+    pyodbc_driver_name = 'Progress OpenEdge Wire Protocol'
     execution_ctx_cls = ProgressExecutionContext_pyodbc
 
     def __init__(self, description_encoding='latin-1', **kwargs):
