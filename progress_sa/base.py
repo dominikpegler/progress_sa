@@ -105,12 +105,12 @@ class ProgressTypeCompiler(compiler.GenericTypeCompiler):
     pass
 
 class ProgressSQLCompiler(compiler.SQLCompiler):
-    def get_select_precolumns(self, select):
+    def get_select_precolumns(self, select, **kw):
         s = select._distinct and "DISTINCT " or ""
         if select._limit:
             s += "TOP %s " % (select._limit,)
             return s
-        return compiler.SQLCompiler.get_select_precolumns(self, select)
+        return compiler.SQLCompiler.get_select_precolumns(self, select, **kw)
 
     def limit_clause(self, select):
         return ""
