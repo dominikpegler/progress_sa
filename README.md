@@ -1,6 +1,6 @@
 # SQLAlchemy dialect for Progress OpenEdge
 
-This is an attempt to make this [this](https://github.com/dholth/progress_sa) work for python3 and progress 11
+A fork of [this](https://github.com/dholth/progress_sa) work for Python3 and Progress OpenEdge 11.7
 
 ## Install
 
