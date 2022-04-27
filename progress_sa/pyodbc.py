@@ -50,7 +50,7 @@ class Progress_pyodbc(PyODBCConnector, ProgressDialect):
             else:
                 port = ""
                 if "port" in keys and "port" not in query:
-                    port = ",%d" % int(keys.pop("port"))
+                    port = "%d" % int(keys.pop("port"))
 
                 connectors = []
                 driver = keys.pop("driver", self.pyodbc_driver_name)
@@ -63,11 +63,11 @@ class Progress_pyodbc(PyODBCConnector, ProgressDialect):
                     )
                 else:
                     connectors.append("DRIVER={%s}" % driver)
-
                 connectors.extend(
                     [
-                        "Server=%s%s" % (keys.pop("host", ""), port),
-                        "Database=%s" % keys.pop("database", ""),
+                        "HOST=%s" % keys.pop("host", ""),
+                        "PORT=%s" % port,
+                        "DB=%s" % keys.pop("database", ""),
                     ]
                 )
 
