@@ -176,7 +176,7 @@ class ProgressDialect(default.DefaultDialect):
     def last_inserted_ids(self):
         return self.context.last_inserted_ids
 
-    def get_default_schema_name(self, connection):
+    def _get_default_schema_name(self, connection):
         return self.schema_name
 
     def _get_raw_cursor(self, connection):
