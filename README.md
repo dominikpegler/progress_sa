@@ -14,6 +14,7 @@ $ python setup.py install
 ```python
 from sqlalchemy import create_engine
 
+# driver name may vary
 pyodbc_connstr = r'DRIVER={Progress OpenEdge 11.7 Driver};HOST=<host>;PORT=<port>;DB=<db>;UID=<user>;PWD=<password>;DEFAULTSCHEMA=PUB;'
 
 connstr = 'progress+pyodbc:///?odbc_connect={}'.format(pyodbc_connstr)
