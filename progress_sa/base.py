@@ -137,10 +137,11 @@ class ProgressDialect(default.DefaultDialect):
 
     def __init__(self, **params):
         super(ProgressDialect, self).__init__(**params)
+        print(self.__dict__)
         self.text_as_varchar = False
 
     def _check_unicode_returns(self, connection):
-        #return True
+        return True
 
         # XXX Lately this hangs the database:
         cursor = self._get_raw_cursor(connection)
@@ -178,7 +179,7 @@ class ProgressDialect(default.DefaultDialect):
 
     def _get_default_schema_name(self, connection):
         return self.schema_name
-
+    
     def _get_raw_cursor(self, connection):
         return connection.engine.raw_connection().cursor()
 
