@@ -31,7 +31,6 @@ Create a file named `progress.py` in `<superset_root_dir>/superset/db_engine_spe
 from superset.db_engine_specs.base import BaseEngineSpec
 
 class ProgressBaseEngineSpec(BaseEngineSpec):
-    """Abstract class for Postgres 'like' databases"""
 
     engine = "progress"
     engine_name = "progress"
