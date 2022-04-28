@@ -172,6 +172,21 @@ class ProgressDialect(default.DefaultDialect):
 
         return result
 
+    def do_ping(self, connection):
+        cursor = None
+        try:
+            cursor = connection.cursor()
+            try:
+                cursor.execute("""SELECT 1 from SYSPROGRESS.SYSCALCTABLE""")
+            finally:
+                cursor.close()
+        except self.dbapi.Error as err:
+            if self.is_disconnect(err, connection, cursor):
+                return False
+            else:
+                raise
+        else:
+            return True
 
     def last_inserted_ids(self):
         return self.context.last_inserted_ids
