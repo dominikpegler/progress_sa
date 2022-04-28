@@ -127,6 +127,7 @@ class ProgressDialect(default.DefaultDialect):
     supports_sane_rowcount = False
     supports_sane_multi_rowcount = False
     colspecs = {}
+    allow_limit_clause = False
 
     type_compiler = ProgressTypeCompiler
     statement_compiler = ProgressSQLCompiler
