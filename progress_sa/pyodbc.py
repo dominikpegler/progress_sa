@@ -1,11 +1,12 @@
 from progress_sa.base import ProgressDialect, ProgressExecutionContext
 from sqlalchemy.connectors.pyodbc import PyODBCConnector
-from sqlalchemy.util import asbool
+from sqlalchemy import util
 import sys
 
 
 class ProgressExecutionContext_pyodbc(ProgressExecutionContext):
     pass
+
 
 class Progress_pyodbc(PyODBCConnector, ProgressDialect):
 #    pyodbc_driver_name = 'Progress OpenEdge Wire Protocol'
@@ -96,6 +97,7 @@ class Progress_pyodbc(PyODBCConnector, ProgressDialect):
             connectors.extend(["%s=%s" % (k, v) for k, v in keys.items()])
 
         return [[";".join(connectors)], connect_args]
+        
         
         
 dialect = Progress_pyodbc
