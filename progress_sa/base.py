@@ -137,7 +137,6 @@ class ProgressDialect(default.DefaultDialect):
 
     def __init__(self, **params):
         super(ProgressDialect, self).__init__(**params)
-        print(self.__dict__)
         self.text_as_varchar = False
 
     def _check_unicode_returns(self, connection):
