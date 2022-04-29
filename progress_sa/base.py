@@ -112,7 +112,7 @@ class ProgressSQLCompiler(compiler.SQLCompiler):
             return s
         return compiler.SQLCompiler.get_select_precolumns(self, select, **kw)
 
-    def limit_clause(self, select):
+    def limit_clause(self, select, **kw):
         return ""
 
 class ProgressDDLCompiler(compiler.DDLCompiler):
