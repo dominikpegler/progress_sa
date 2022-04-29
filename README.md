@@ -13,12 +13,29 @@ $ python setup.py install
 
 ```python
 from sqlalchemy import create_engine
+import pandas as pd
+import sys
 
 # driver name may vary
-pyodbc_connstr = r'DRIVER={Progress OpenEdge 11.7 Driver};HOST=<host>;PORT=<port>;DB=<db>;UID=<user>;PWD=<password>;DEFAULTSCHEMA=PUB;'
+pyodbc_str = r"""
+    DRIVER={Progress OpenEdge 11.7 Driver};
+    HOST=<host>;
+    PORT=<port>;
+    DB=<db>;
+    UID=<user>;
+    PWD=<password>;
+    DEFAULTSCHEMA=PUB;
+"""
 
-connstr = 'progress+pyodbc:///?odbc_connect={}'.format(pyodbc_connstr)
-engine = create_engine(connstr)
+if (sys.platform == "win32") | (sys.platform == "win64") | (sys.platform == "win"):
+    sa_str = "progress+pyodbc:///?odbc_connect={}".format(pyodbc_connstr)
+
+else:
+    sa_str = "progress+pyodbc://<user>:<password>@<host>:<port>/<db>?DEFAULTSCHEMA=PUB"
+
+engine = create_engine(sa_str)
+
+pd.read_sql("""SELECT TOP 10 * FROM sysprogress.systables""", engine)
 ```
 
 ## Use with Apache Superset
@@ -36,4 +53,9 @@ class ProgressBaseEngineSpec(BaseEngineSpec):
     engine_name = "progress"
     allow_limit_clause = False
     
+```
+
+Create a new database connection in Apache Superset by entering a connection string in this format:
+```
+progress+pyodbc://<user>:<password>@<host>:<port>/<db>?DEFAULTSCHEMA=PUB
 ```
