@@ -54,7 +54,15 @@ class ProgressBaseEngineSpec(BaseEngineSpec):
     allow_limit_clause = False
     allows_alias_in_select = True
     force_column_alias_quotes = True
-    
+
+    _time_grain_expressions = {
+    None: "{col}",
+    "P1D": "{col}",
+    "P1W": "{col} + 1 - DAYOFWEEK({col})", # assuming sunday is the first day of the week
+    "P1M": "TO_DATE(TO_CHAR(YEAR({col})) + '-' + TO_CHAR(MONTH({col})) + '-01')",
+    "P3M": "TO_DATE(TO_CHAR(YEAR({col})) + '-' + TO_CHAR(3*QUARTER({col})-2) + '-01')",
+    "P1Y": "TO_DATE(TO_CHAR(YEAR({col})) + '-01-01')",
+}    
 ```
 
 Create a new database connection in Apache Superset by entering a connection string in this format:
