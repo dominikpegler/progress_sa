@@ -52,6 +52,8 @@ class ProgressBaseEngineSpec(BaseEngineSpec):
     engine = "progress"
     engine_name = "progress"
     allow_limit_clause = False
+    allows_alias_in_select = True
+    force_column_alias_quotes = True
     
 ```
 
