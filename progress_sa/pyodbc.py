@@ -1,6 +1,7 @@
 from progress_sa.base import ProgressDialect, ProgressExecutionContext
 from sqlalchemy.connectors.pyodbc import PyODBCConnector
 from sqlalchemy import util
+from urllib.parse import unquote_plus
 import sys
 
 
@@ -30,7 +31,7 @@ class Progress_pyodbc(PyODBCConnector, ProgressDialect):
                 connect_args[param] = util.asbool(keys.pop(param))
 
         if "odbc_connect" in keys:
-            connectors = [util.unquote_plus(keys.pop("odbc_connect"))]
+            connectors = [unquote_plus(keys.pop("odbc_connect"))]
         else:
 
             def check_quote(token):
