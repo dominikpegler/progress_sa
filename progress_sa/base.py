@@ -203,7 +203,7 @@ class ProgressDialect(default.DefaultDialect):
         schemas = cursor.execute('select distinct owner from sysprogress.SYSTABLES')
         return [row[0] for row in schemas]
 
-    def get_table_names(self, connection, schema):
+    def get_table_names(self, connection, schema, **kw):
         cursor = self._get_raw_cursor(connection)
         s = cursor.tables(schema=schema or '')
         return [row.table_name for row in s]
