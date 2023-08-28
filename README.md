@@ -1,3 +1,9 @@
+# Disclaimer
+I am fine tuning this Progress Openedge SQLalchemy dialect for use in a meltano based data infrastructure imporvement at my organization.
+
+
+
+
 # SQLAlchemy dialect for Progress OpenEdge
 
 An adaption of [this work](https://github.com/dholth/progress_sa) for Python3 and Progress OpenEdge 11.7
