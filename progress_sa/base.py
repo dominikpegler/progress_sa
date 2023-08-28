@@ -207,6 +207,7 @@ class ProgressDialect(default.DefaultDialect):
         cursor = self._get_raw_cursor(connection)
         s = cursor.tables(schema=schema or '')
         return [row.table_name for row in s]
+    
 
     def has_table(self, connection, tablename, schema=None):
         cursor = self._get_raw_cursor(connection)
@@ -242,6 +243,25 @@ class ProgressDialect(default.DefaultDialect):
     def get_foreign_keys(self, *args, **kw):
         # does not seem to be implemented in the database.
         return []
+    
+    def get_pk_constraint(self, connection, tablename, schema, **kw):
+        pkeys = []
+        cursor = self._get_raw_cursor(connection)
+        c = cursor.execute('select * from SYSPROGRESS.SYS_TBL_CONSTRS')
+        constraint_name = None
+
+        for row in c.fetchall():
+            if "PRIMARY" in row[1]:
+                pkeys.append(row[4])
+                if constraint_name is None:
+                    constraint_name = row[0]
+        if pkeys:
+            return {
+                "constrained_columns": pkeys,
+                "name": constraint_name,
+            }
+
+
 
     def get_indexes(self, connection, table_name, schema=None, **kw):
         # implemented in the database, not terribly useful.
