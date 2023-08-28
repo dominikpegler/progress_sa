@@ -96,6 +96,10 @@ ischema_names = {
         'timestamp_timezone':TIMESTAMP,
         'varbinary':VARCHAR,
         'varchar':VARCHAR,
+        'lvarbinary':VARCHAR,
+        'varbina':VARCHAR,
+        'lvarchar':VARCHAR,
+        'decimal':FLOAT,
 }
 
 class ProgressExecutionContext(default.DefaultExecutionContext):
@@ -227,7 +231,7 @@ class ProgressDialect(default.DefaultDialect):
 
             type_name = column[index['type_name']]
             column_size = column[index['column_size']]
-            coltype = ischema_names[type_name](column_size)
+            coltype = ischema_names[type_name]()
 
             columns.append(dict(name=name, type=coltype,
                 nullable=nullable, default=default,
