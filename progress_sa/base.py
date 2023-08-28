@@ -197,6 +197,11 @@ class ProgressDialect(default.DefaultDialect):
     
     def _get_raw_cursor(self, connection):
         return connection.engine.raw_connection().cursor()
+    
+    def get_schema_names(self, connection, **kw):
+        cursor = self._get_raw_cursor(connection)
+        schemas = cursor.execute('select distinct owner from sysprogress.SYSTABLES')
+        return [row[0] for row in schemas]
 
     def get_table_names(self, connection, schema):
         cursor = self._get_raw_cursor(connection)
