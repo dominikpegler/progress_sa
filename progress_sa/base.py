@@ -84,7 +84,7 @@ ischema_names = {
         'bigint':BIGINT,
         'bit':BOOLEAN,
         'character':CHAR,
-        'date':DATE,
+        'date':TIMESTAMP,
         'float':FLOAT, # double precision. Also FLOAT(8) in SQL.
         'integer':INTEGER,
         'numeric':NUMERIC,
