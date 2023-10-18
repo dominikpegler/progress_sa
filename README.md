@@ -14,6 +14,8 @@ An adaption of [this work](https://github.com/dholth/progress_sa) for Python3 an
 $ cd progress_sa
 $ python setup.py install
 ```
+## DRIVER_NAME env variable
+Due to variation in driver names, create an environment variable called PROGRESS_OE_DRIVER_NAME with your particular driver name and the driver will pull it in and use it. 
 
 ## Usage
 
