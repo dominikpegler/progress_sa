@@ -84,7 +84,7 @@ ischema_names = {
         'bigint':BIGINT,
         'bit':BOOLEAN,
         'character':CHAR,
-        'date':DATE,
+        'date':TIMESTAMP,
         'float':FLOAT, # double precision. Also FLOAT(8) in SQL.
         'integer':INTEGER,
         'numeric':NUMERIC,
@@ -96,6 +96,10 @@ ischema_names = {
         'timestamp_timezone':TIMESTAMP,
         'varbinary':VARCHAR,
         'varchar':VARCHAR,
+        'lvarbinary':VARCHAR,
+        'varbina':VARCHAR,
+        'lvarchar':VARCHAR,
+        'decimal':FLOAT,
 }
 
 class ProgressExecutionContext(default.DefaultExecutionContext):
@@ -197,11 +201,17 @@ class ProgressDialect(default.DefaultDialect):
     
     def _get_raw_cursor(self, connection):
         return connection.engine.raw_connection().cursor()
+    
+    def get_schema_names(self, connection, **kw):
+        cursor = self._get_raw_cursor(connection)
+        schemas = cursor.execute('select distinct owner from sysprogress.SYSTABLES')
+        return [row[0] for row in schemas]
 
-    def get_table_names(self, connection, schema):
+    def get_table_names(self, connection, schema, **kw):
         cursor = self._get_raw_cursor(connection)
         s = cursor.tables(schema=schema or '')
         return [row.table_name for row in s]
+    
 
     def has_table(self, connection, tablename, schema=None):
         cursor = self._get_raw_cursor(connection)
@@ -221,7 +231,7 @@ class ProgressDialect(default.DefaultDialect):
 
             type_name = column[index['type_name']]
             column_size = column[index['column_size']]
-            coltype = ischema_names[type_name](column_size)
+            coltype = ischema_names[type_name]()
 
             columns.append(dict(name=name, type=coltype,
                 nullable=nullable, default=default,
@@ -237,6 +247,25 @@ class ProgressDialect(default.DefaultDialect):
     def get_foreign_keys(self, *args, **kw):
         # does not seem to be implemented in the database.
         return []
+    
+    def get_pk_constraint(self, connection, tablename, schema, **kw):
+        pkeys = []
+        cursor = self._get_raw_cursor(connection)
+        c = cursor.execute('select * from SYSPROGRESS.SYS_TBL_CONSTRS')
+        constraint_name = None
+
+        for row in c.fetchall():
+            if "PRIMARY" in row[1]:
+                pkeys.append(row[4])
+                if constraint_name is None:
+                    constraint_name = row[0]
+        if pkeys:
+            return {
+                "constrained_columns": pkeys,
+                "name": constraint_name,
+            }
+
+
 
     def get_indexes(self, connection, table_name, schema=None, **kw):
         # implemented in the database, not terribly useful.

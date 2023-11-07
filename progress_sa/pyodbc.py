@@ -1,7 +1,9 @@
 from progress_sa.base import ProgressDialect, ProgressExecutionContext
 from sqlalchemy.connectors.pyodbc import PyODBCConnector
 from sqlalchemy import util
+from urllib.parse import unquote_plus
 import sys
+import os
 
 
 class ProgressExecutionContext_pyodbc(ProgressExecutionContext):
@@ -10,7 +12,7 @@ class ProgressExecutionContext_pyodbc(ProgressExecutionContext):
 
 class Progress_pyodbc(PyODBCConnector, ProgressDialect):
 #    pyodbc_driver_name = 'Progress OpenEdge Wire Protocol'
-    pyodbc_driver_name = 'DataDirect 7.1 Progress OpenEdge Wire Protocol'
+    pyodbc_driver_name = os.environ.get("PROGRESS_OE_DRIVER_NAME")
     execution_ctx_cls = ProgressExecutionContext_pyodbc
     def __init__(self, **kwargs):
         super(Progress_pyodbc, self).__init__(**kwargs)
@@ -30,7 +32,7 @@ class Progress_pyodbc(PyODBCConnector, ProgressDialect):
                 connect_args[param] = util.asbool(keys.pop(param))
 
         if "odbc_connect" in keys:
-            connectors = [util.unquote_plus(keys.pop("odbc_connect"))]
+            connectors = [unquote_plus(keys.pop("odbc_connect"))]
         else:
 
             def check_quote(token):

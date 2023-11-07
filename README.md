@@ -1,3 +1,9 @@
+# Disclaimer
+I am fine tuning this Progress Openedge SQLalchemy dialect for use in a meltano based data infrastructure improvement at my organization.
+
+
+
+
 # SQLAlchemy dialect for Progress OpenEdge
 
 An adaption of [this work](https://github.com/dholth/progress_sa) for Python3 and Progress OpenEdge 11.7
@@ -8,6 +14,8 @@ An adaption of [this work](https://github.com/dholth/progress_sa) for Python3 an
 $ cd progress_sa
 $ python setup.py install
 ```
+## DRIVER_NAME env variable
+Due to variation in driver names, create an environment variable called PROGRESS_OE_DRIVER_NAME with your particular driver name and the driver will pull it in and use it. 
 
 ## Usage
 
